@@ -6,14 +6,13 @@ const fs = require('fs');
 const readline = require('readline');
 
 // Returns the id of the line if the line is winnable given the const input
-//
 function IdOfWinnableGame(line) {
     var splitGame = line.trim().split(":");
     var gameID = splitGame[0].slice(4).trim();
     var game = splitGame[1].trim();
     var gameViews = game.split('; ');
 
-    for (i = 0; i <= gameViews.length; i++) {
+    for (i = 0; i < gameViews.length; i++) {
         var gameMap = {
             blue: 0,
             green: 0,
@@ -48,7 +47,7 @@ async function processLineByLine(fileName) {
     });
 
     for await (const line of rl) {
-        answer += IdOfWinnableGame(line);
+        answer += Number(IdOfWinnableGame(line))
     }
 
     return answer;
@@ -60,4 +59,6 @@ if (args.length != 1) {
     process.exit(1);
 }
 
-processLineByLine(args[0]).then(result => process.stdout.write(`${result}`));
+processLineByLine(args[0]).then(result => {
+    process.stdout.write(`${result}\n`)
+});
